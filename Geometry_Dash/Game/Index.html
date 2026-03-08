@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometry Dash</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+
+<body>
+    <!-- MAIN MENU -->
+    <div id="menuScreen" class="screen">
+        <div class="menu-fx" aria-hidden="true">
+            <div id="menuIconsLayer" class="menu-icons-layer"></div>
+            <div class="menu-ground"></div>
+        </div>
+        <div class="menu-container">
+            <h1 class="title">GEOMETRY DASH</h1>
+            <div class="buttons">
+                <button onclick="showLevelSelect()">PLAY</button>
+                <button id="levelEditorMenuBtn" onclick="showEditor()">LEVEL EDITOR</button>
+                <button onclick="showMods()">MODS</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEVEL SELECT -->
+    <div id="levelSelectScreen" class="screen hidden">
+        <div class="level-select-container">
+            <h2 class="level-title">SELECT LEVEL</h2>
+            <button class="level-card" onclick="startCustomLevel()">
+                <span class="level-name">CUSTOM LEVEL</span>
+            </button>
+            <button class="level-back-btn" onclick="hideLevelSelect()">BACK TO MENU</button>
+        </div>
+    </div>
+
+    <!-- MODS SCREEN -->
+    <div id="modsScreen" class="screen hidden">
+        <div class="modal">
+            <h2>MODS</h2>
+            <div class="mod-row">
+                <span>CUBES</span>
+                <button class="mod-action-btn" onclick="showCubes()">CHECK</button>
+            </div>
+            <div class="mod-row">
+                <span>CUBE STYLES</span>
+                <button class="mod-action-btn" onclick="showCubeStyles()">CHECK</button>
+            </div>
+            <div class="mod-row">
+                <span>CHEATS</span>
+                <button class="mod-action-btn" onclick="showCheats()">CHECK</button>
+            </div>
+            <div class="mod-row">
+                <span>EXTRAS</span>
+                <button class="mod-action-btn" onclick="showExtras()">CHECK</button>
+            </div>
+            <button onclick="hideMods()">BACK TO MENU</button>
+        </div>
+    </div>
+
+    <!-- EXTRAS SCREEN -->
+    <div id="extrasScreen" class="screen hidden">
+        <div class="modal cube-styles-modal">
+            <h2>EXTRAS</h2>
+            <div class="cube-style-center">
+                <div class="mod-row">
+                    <span>LEVEL EDITOR</span>
+                    <button id="levelEditorToggleBtn" class="mod-toggle" onclick="toggleLevelEditorLock()">OFF</button>
+                </div>
+            </div>
+            <button class="cube-style-back-btn" onclick="hideExtras()">BACK TO MODS</button>
+        </div>
+    </div>
+
+    <!-- CHEATS SCREEN -->
+    <div id="cheatsScreen" class="screen hidden">
+        <div class="modal cube-styles-modal">
+            <h2>CHEATS</h2>
+            <div class="cube-style-center">
+                <div class="mod-row">
+                    <span>NOCLIP</span>
+                    <button id="noclipToggleBtn" class="mod-toggle" onclick="toggleNoclip()">OFF</button>
+                </div>
+            </div>
+            <button class="cube-style-back-btn" onclick="hideCheats()">BACK TO MODS</button>
+        </div>
+    </div>
+
+    <!-- CUBES SCREEN -->
+    <div id="cubesScreen" class="screen hidden">
+        <div class="modal cube-styles-modal">
+            <h2>CUBES</h2>
+            <div class="cube-style-center">
+                <div class="mod-row">
+                    <span>NORMAL CUBES</span>
+                    <button class="mod-action-btn" onclick="showNormalCubes()">CHECK</button>
+                </div>
+                <div class="mod-row">
+                    <span>ROBTOP CUBES</span>
+                    <button class="mod-action-btn" onclick="showRobTopCubes()">CHECK</button>
+                </div>
+                <div class="mod-row">
+                    <span>GAME CUBES</span>
+                    <button class="mod-action-btn" onclick="showGameCubes()">CHECK</button>
+                </div>
+            </div>
+            <button class="cube-style-back-btn" onclick="hideCubes()">BACK TO MODS</button>
+        </div>
+    </div>
+
+    <!-- NORMAL CUBES SCREEN -->
+    <div id="normalCubesScreen" class="screen hidden">
+        <div class="modal cube-styles-modal">
+            <h2>NORMAL CUBES</h2>
+            <div class="cube-style-center">
+                <div class="mod-row">
+                    <span>GD COLON</span>
+                    <img class="cube-option-icon" src="../Mods/Cubes/Normal Cubes/GD Colon Cube.png"
+                        alt="GD Colon icon">
+                    <button id="gdColonToggleBtn" class="mod-toggle" onclick="toggleGdColon()">OFF</button>
+                </div>
+                <div class="mod-row">
+                    <span>VORTROX</span>
+                    <img class="cube-option-icon" src="../Mods/Cubes/Normal Cubes/Vortrox Cube.png" alt="Vortrox icon">
+                    <button id="vortroxToggleBtn" class="mod-toggle" onclick="toggleVortrox()">OFF</button>
+                </div>
+                <div class="mod-row">
+                    <span>NEXUS</span>
+                    <img class="cube-option-icon" src="../Mods/Cubes/Normal Cubes/Nexus.png" alt="Nexus icon">
+                    <button id="nexusToggleBtn" class="mod-toggle" onclick="toggleNexus()">OFF</button>
+                </div>
+                <div class="mod-row">
+                    <span>TRICIPITAL</span>
+                    <img class="cube-option-icon" src="../Mods/Cubes/Normal Cubes/Tricipital.png" alt="Tricipital icon">
+                    <button id="tricipitalToggleBtn" class="mod-toggle" onclick="toggleTricipital()">OFF</button>
+                </div>
+            </div>
+            <button class="cube-style-back-btn" onclick="hideNormalCubes()">BACK TO CUBES</button>
+        </div>
+    </div>
+
+    <!-- ROBTOP CUBES SCREEN -->
+    <div id="robTopCubesScreen" class="screen hidden">
+        <div class="modal cube-styles-modal">
+            <h2>ROBTOP CUBES</h2>
+            <div class="cube-style-center">
+                <div class="mod-row">
+                    <span>GD ICON</span>
+                    <img class="cube-option-icon" src="../Mods/Cubes/RobTop Cubes/GD Icon.png" alt="GD Icon icon">
+                    <button id="gdIconToggleBtn" class="mod-toggle" onclick="toggleGdIcon()">OFF</button>
+                </div>
+                <div class="mod-row">
+                    <span>ROBTOP</span>
+                    <img class="cube-option-icon" src="../Mods/Cubes/RobTop Cubes/RobTop.png" alt="RobTop icon">
+                    <button id="robTopToggleBtn" class="mod-toggle" onclick="toggleRobTop()">OFF</button>
+                </div>
+                <div class="mod-row">
+                    <span>RUBRUB</span>
+                    <img class="cube-option-icon" src="../Mods/Cubes/RobTop Cubes/RubRub.png" alt="RubRub icon">
+                    <button id="rubRubToggleBtn" class="mod-toggle" onclick="toggleRubRub()">OFF</button>
+                </div>
+            </div>
+            <button class="cube-style-back-btn" onclick="hideRobTopCubes()">BACK TO CUBES</button>
+        </div>
+    </div>
+
+    <!-- GAME CUBES SCREEN -->
+    <div id="gameCubesScreen" class="screen hidden">
+        <div class="modal cube-styles-modal">
+            <h2>GAME CUBES</h2>
+            <div class="cube-style-center">
+                <div class="mod-row">
+                    <span>AVATAR AANG</span>
+                    <img class="cube-option-icon" src="../Mods/Cubes/Game Cubes/Avatar Aang.png" alt="Avatar Aang icon">
+                    <button id="avatarAangToggleBtn" class="mod-toggle" onclick="toggleAvatarAang()">OFF</button>
+                </div>
+                <div class="mod-row">
+                    <span>BOOMLINGS</span>
+                    <img class="cube-option-icon" src="../Mods/Cubes/Game Cubes/Boomlings.png" alt="Boomlings icon">
+                    <button id="boomlingsToggleBtn" class="mod-toggle" onclick="toggleBoomlings()">OFF</button>
+                </div>
+                <div class="mod-row">
+                    <span>SANS</span>
+                    <img class="cube-option-icon" src="../Mods/Cubes/Game Cubes/Sans.png" alt="Sans icon">
+                    <button id="sansToggleBtn" class="mod-toggle" onclick="toggleSans()">OFF</button>
+                </div>
+                <div class="mod-row">
+                    <span>BATMAN</span>
+                    <img class="cube-option-icon" src="../Mods/Cubes/Game Cubes/Batman.png" alt="Batman icon">
+                    <button id="batmanToggleBtn" class="mod-toggle" onclick="toggleBatman()">OFF</button>
+                </div>
+                <div class="mod-row">
+                    <span>CREEPER</span>
+                    <img class="cube-option-icon" src="../Mods/Cubes/Game Cubes/Creeper.png" alt="Creeper icon">
+                    <button id="creeperToggleBtn" class="mod-toggle" onclick="toggleCreeper()">OFF</button>
+                </div>
+                <div class="mod-row">
+                    <span class="long-cube-label">SUPER MEAT BOY</span>
+                    <img class="cube-option-icon" src="../Mods/Cubes/Game Cubes/Super Meat Boy.png"
+                        alt="Super Meat Boy icon">
+                    <button id="superMeatBoyToggleBtn" class="mod-toggle" onclick="toggleSuperMeatBoy()">OFF</button>
+                </div>
+            </div>
+            <button class="cube-style-back-btn" onclick="hideGameCubes()">BACK TO CUBES</button>
+        </div>
+    </div>
+
+    <!-- CUBE STYLES SCREEN -->
+    <div id="cubeStylesScreen" class="screen hidden">
+        <div class="modal cube-styles-modal">
+            <h2>CUBE STYLES</h2>
+            <div class="cube-style-center">
+                <div class="mod-row">
+                    <span>TRAIL</span>
+                    <button id="trailToggleBtn" class="mod-toggle" onclick="toggleTrail()">OFF</button>
+                </div>
+                <div class="mod-row">
+                    <span>RGB CUBE</span>
+                    <button id="rgbCubeToggleBtn" class="mod-toggle" onclick="toggleRgbCube()">OFF</button>
+                </div>
+            </div>
+            <button class="cube-style-back-btn" onclick="hideCubeStyles()">BACK TO MODS</button>
+        </div>
+    </div>
+
+    <!-- GAME SCREEN -->
+    <div id="gameScreen" class="screen hidden">
+        <canvas id="gameCanvas"></canvas>
+        <div id="gameUI">
+            <div id="score">0</div>
+            <button onclick="pauseGame()" class="pause-btn">PAUSE</button>
+        </div>
+    </div>
+
+    <!-- EDITOR SCREEN -->
+    <div id="editorScreen" class="screen hidden">
+        <canvas id="editorCanvas"></canvas>
+        <div class="editor-mode-switch">
+            <button id="objectsModeBtn" onclick="setEditorPanelMode('objects')">OBJECTS</button>
+            <button id="interactableModeBtn" onclick="setEditorPanelMode('interactable')">INTERACTABLE</button>
+            <button id="editModeBtn" onclick="setEditorPanelMode('edit')">EDIT</button>
+            <button id="viewModeBtn" onclick="setEditorPanelMode('view')">VIEW</button>
+        </div>
+        <div class="editor-tools">
+            <div id="objectsModeTools" class="editor-tool-group">
+                <button class="tool-icon-btn icon-block" data-tool="0" onclick="setTool(0)" title="BLOCK (ground)"
+                    aria-label="BLOCK (ground)"></button>
+                <button class="tool-icon-btn icon-spike" data-tool="1" onclick="setTool(1)" title="SPIKE (ground)"
+                    aria-label="SPIKE (ground)"></button>
+                <button class="tool-icon-btn icon-trash" data-tool="2" onclick="setTool(2)" title="ERASE" aria-label="ERASE"></button>
+            </div>
+            <div id="interactableModeTools" class="editor-tool-group hidden">
+                <button class="tool-icon-btn icon-yellow-orb" data-tool="3" onclick="setTool(3)" title="YELLOW ORB"
+                    aria-label="YELLOW ORB"></button>
+                <button class="tool-icon-btn icon-yellow-pad" data-tool="4" onclick="setTool(4)" title="YELLOW PAD"
+                    aria-label="YELLOW PAD"></button>
+                <button class="tool-icon-btn icon-blue-orb" data-tool="5" onclick="setTool(5)" title="BLUE ORB"
+                    aria-label="BLUE ORB"></button>
+                <button class="tool-icon-btn icon-blue-pad" data-tool="6" onclick="setTool(6)" title="BLUE PAD"
+                    aria-label="BLUE PAD"></button>
+                <button class="tool-icon-btn icon-trash" data-tool="2" onclick="setTool(2)" title="ERASE" aria-label="ERASE"></button>
+            </div>
+            <div id="editModeTools" class="editor-tool-group hidden">
+                <button class="tool-icon-btn icon-trash" onclick="deleteSelectedObject()" title="DELETE SELECTED"
+                    aria-label="DELETE SELECTED"></button>
+                <button onclick="clearLevel()">CLEAR</button>
+                <button onclick="testPlay()">TEST PLAY</button>
+            </div>
+            <div id="viewModeTools" class="editor-tool-group hidden">
+                <button onclick="saveLevel()">SAVE</button>
+                <button onclick="loadLevel()">LOAD</button>
+                <button onclick="exitEditor()">BACK TO MENU</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUDIO -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="../Mods/Mods.js"></script>
+    <script src="Game.js"></script>
+</body>
+
+</html>
