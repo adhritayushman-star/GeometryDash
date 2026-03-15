@@ -1,0 +1,1052 @@
+/* style.css - full version including MODS screen */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0a0a0a;
+    color: #fff;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    overflow: hidden;
+    user-select: none;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.95);
+}
+
+#menuScreen {
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 12% 24%, rgba(255, 255, 255, 0.12) 0 2px, transparent 3px),
+        radial-gradient(circle at 38% 40%, rgba(255, 255, 255, 0.1) 0 1.8px, transparent 3px),
+        radial-gradient(circle at 72% 30%, rgba(255, 255, 255, 0.1) 0 2px, transparent 3px),
+        radial-gradient(circle at 85% 55%, rgba(255, 255, 255, 0.09) 0 1.6px, transparent 3px),
+        linear-gradient(180deg, #0a0a12 0%, #0a0920 68%, #110526 100%);
+}
+
+#gameScreen,
+#editorScreen {
+    align-items: stretch;
+    justify-content: stretch;
+    background: #000;
+}
+
+#gameCanvas,
+#editorCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.menu-container {
+    text-align: center;
+    position: relative;
+    z-index: 6;
+}
+
+.menu-fx {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.menu-icons-layer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 112px;
+    height: 260px;
+    overflow: visible;
+    z-index: 3;
+}
+
+.menu-ground {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 118px;
+    background:
+        linear-gradient(180deg, #6f2ac9 0%, #5b17b0 48%, #4d0d9f 100%);
+    border-top: 4px solid #9f6ce6;
+    z-index: 2;
+}
+
+.menu-ground::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.17) 0 4px, transparent 4px 34px);
+    opacity: 0.55;
+}
+
+.menu-fake-icon {
+    position: absolute;
+    left: -90px;
+    bottom: 6px;
+    width: 34px;
+    height: 34px;
+    animation-name: menuIconRun;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.menu-fake-icon-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
+    transform-origin: center center;
+}
+
+@keyframes menuIconRun {
+    from {
+        transform: translateX(-120px);
+    }
+
+    to {
+        transform: translateX(calc(100vw + 220px));
+    }
+}
+
+.title {
+    font-size: clamp(2.4rem, 6.4vw, 5.4rem);
+    background: linear-gradient(90deg, #ff00ff, #00ffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px #ff00ff;
+    margin-bottom: clamp(18px, 4vh, 40px);
+    letter-spacing: clamp(3px, 0.9vw, 8px);
+}
+
+.buttons button {
+    display: block;
+    margin: 15px auto;
+    padding: clamp(12px, 2.1vh, 18px) clamp(26px, 5.5vw, 60px);
+    min-height: clamp(46px, 6.4vh, 58px);
+    font-size: clamp(1rem, 2.2vw, 1.8rem);
+    background: transparent;
+    border: 4px solid #ff00ff;
+    color: #fff;
+    cursor: pointer;
+    transition: all .2s;
+    box-shadow: 0 0 20px #ff00ff;
+}
+
+.buttons button:hover {
+    background: #ff00ff;
+    color: #000;
+    transform: scale(1.1);
+    box-shadow: 0 0 40px #00ffff;
+}
+
+.modal {
+    background: #1a0033;
+    padding: clamp(22px, 4vh, 40px);
+    border: 5px solid #ff00ff;
+    border-radius: 15px;
+    text-align: center;
+    max-width: min(92vw, 560px);
+    box-shadow: 0 0 50px #ff00ff;
+}
+
+.modal h2 {
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    margin-bottom: 20px;
+    color: #00ffff;
+}
+
+.modal p {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    margin: 15px 0;
+    line-height: 1.5;
+}
+
+.modal button {
+    margin-top: 30px;
+    padding: clamp(10px, 1.9vh, 14px) clamp(22px, 4.3vw, 40px);
+    min-height: clamp(42px, 5.6vh, 52px);
+    font-size: clamp(1rem, 2.1vw, 1.4rem);
+    background: #330066;
+    border: 3px solid #00ffff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.modal button:hover {
+    background: #ff00ff;
+    color: black;
+}
+
+#gameUI {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+#score {
+    font-size: clamp(1.1rem, 2.4vw, 2rem);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px 20px;
+    border-radius: 10px;
+    pointer-events: auto;
+}
+
+.pause-btn {
+    pointer-events: auto;
+    padding: clamp(8px, 1.5vh, 10px) clamp(12px, 2.2vw, 20px);
+    min-height: clamp(36px, 4.6vh, 44px);
+    background: rgba(255, 0, 255, 0.2);
+    border: 2px solid #ff00ff;
+    color: white;
+    font-size: clamp(.9rem, 1.6vw, 1.1rem);
+    cursor: pointer;
+}
+
+.editor-tools {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(26, 0, 51, 0.95);
+    padding: 12px 20px;
+    border-radius: 15px;
+    border: 3px solid #00ffff;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 90%;
+}
+
+.editor-tool-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.editor-mode-switch {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 5;
+}
+
+.editor-mode-switch button {
+    padding: 10px 16px;
+    background: #1e0036;
+    border: 2px solid #00ffff;
+    color: #fff;
+    border-radius: 9px;
+    font-size: .95rem;
+    cursor: pointer;
+}
+
+.editor-mode-switch button.active {
+    background: #ff00ff;
+    color: #000;
+    box-shadow: 0 0 12px rgba(255, 0, 255, 0.7);
+}
+
+.editor-tools button {
+    padding: clamp(9px, 1.7vh, 12px) clamp(12px, 2vw, 18px);
+    min-height: clamp(34px, 4.4vh, 42px);
+    background: #330066;
+    border: 2px solid #ff00ff;
+    color: white;
+    font-size: clamp(.85rem, 1.4vw, 1rem);
+    cursor: pointer;
+    transition: .2s;
+}
+
+.editor-tools button:hover {
+    background: #ff00ff;
+    color: black;
+}
+
+#editorScreen .tool-icon-btn {
+    width: clamp(44px, 5.2vh, 54px);
+    min-width: clamp(44px, 5.2vh, 54px);
+    min-height: clamp(44px, 5.2vh, 54px);
+    padding: 0;
+    position: relative;
+    border: 2px solid #00ffff;
+    background: linear-gradient(180deg, #2b1442, #1a0b2a);
+    border-radius: 10px;
+}
+
+#editorScreen .tool-icon-btn::before,
+#editorScreen .tool-icon-btn::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#editorScreen .tool-icon-btn.icon-block::before {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #7f90af, #4e5d7d);
+    box-shadow: inset 0 0 0 2px #c2d2ff, inset -4px -4px 0 rgba(0, 0, 0, 0.25);
+}
+
+#editorScreen .tool-icon-btn.icon-spike::before {
+    width: 0;
+    height: 0;
+    border-left: 13px solid transparent;
+    border-right: 13px solid transparent;
+    border-bottom: 26px solid #ff5c5c;
+    top: 52%;
+    filter: drop-shadow(0 0 4px rgba(255, 90, 90, 0.65));
+}
+
+#editorScreen .tool-icon-btn.icon-spike::after {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid #ff9c9c;
+    top: 56%;
+}
+
+#editorScreen .tool-icon-btn.icon-trash::before {
+    width: 22px;
+    height: 21px;
+    border-radius: 3px 3px 6px 6px;
+    background:
+        repeating-linear-gradient(90deg,
+            rgba(120, 120, 120, 0.55) 0 2px,
+            rgba(0, 0, 0, 0) 2px 6px),
+        linear-gradient(180deg, #f4f4f4, #a3a3a3);
+    box-shadow:
+        inset 0 0 0 2px #686868,
+        inset 0 0 0 999px rgba(255, 255, 255, 0.05),
+        inset -6px 0 0 rgba(0, 0, 0, 0.09);
+    top: 59%;
+}
+
+#editorScreen .tool-icon-btn.icon-trash::after {
+    width: 20px;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(180deg, #f0f0f0, #b7b7b7);
+    box-shadow:
+        inset 0 0 0 1px #777,
+        0 -4px 0 -1px #666,
+        0 -7px 0 -3px #bcbcbc;
+    top: 34%;
+}
+
+#editorScreen .tool-icon-btn.icon-yellow-orb::before {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff7ad 0 22%, #ffd84b 30%, #f2a400 85%);
+    box-shadow:
+        0 0 0 2px #ffe78a,
+        0 0 9px rgba(255, 220, 80, 0.9);
+}
+
+#editorScreen .tool-icon-btn.icon-yellow-orb::after {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.65);
+    background: transparent;
+}
+
+#editorScreen .tool-icon-btn.icon-yellow-pad::before {
+    width: 30px;
+    height: 14px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #fff3aa, #ffd550 58%, #f0a800);
+    box-shadow:
+        0 0 0 2px #ffe27a,
+        0 2px 0 rgba(0, 0, 0, 0.35),
+        0 0 10px rgba(255, 210, 74, 0.75);
+    top: 58%;
+}
+
+#editorScreen .tool-icon-btn.icon-yellow-pad::after {
+    width: 22px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.4);
+    top: 53%;
+}
+
+#editorScreen .tool-icon-btn.icon-blue-orb::before {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #d7f7ff 0 22%, #56ccff 30%, #0075cc 85%);
+    box-shadow:
+        0 0 0 2px #8ae7ff,
+        0 0 9px rgba(94, 215, 255, 0.9);
+}
+
+#editorScreen .tool-icon-btn.icon-blue-orb::after {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(225, 248, 255, 0.9);
+    background: transparent;
+}
+
+#editorScreen .tool-icon-btn.icon-blue-pad::before {
+    width: 30px;
+    height: 14px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #c4f3ff, #5fd1ff 58%, #007ccf);
+    box-shadow:
+        0 0 0 2px #88e8ff,
+        0 2px 0 rgba(0, 0, 0, 0.35),
+        0 0 10px rgba(100, 218, 255, 0.8);
+    top: 58%;
+}
+
+#editorScreen .tool-icon-btn.icon-blue-pad::after {
+    width: 22px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(225, 248, 255, 0.75);
+    top: 53%;
+}
+
+#editorScreen .tool-icon-btn.icon-pink-orb::before {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #ffe0f5 0 22%, #ff70c0 30%, #d4008a 85%);
+    box-shadow:
+        0 0 0 2px #ffaade,
+        0 0 9px rgba(255, 100, 180, 0.9);
+}
+
+#editorScreen .tool-icon-btn.icon-pink-orb::after {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 220, 240, 0.85);
+    background: transparent;
+}
+
+#editorScreen .tool-icon-btn.icon-pink-pad::before {
+    width: 30px;
+    height: 14px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #ffe0f5, #ff70c0 58%, #cc0077);
+    box-shadow:
+        0 0 0 2px #ffaade,
+        0 2px 0 rgba(0, 0, 0, 0.35),
+        0 0 10px rgba(255, 100, 180, 0.8);
+    top: 58%;
+}
+
+#editorScreen .tool-icon-btn.icon-pink-pad::after {
+    width: 22px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 220, 240, 0.75);
+    top: 53%;
+}
+
+#editorScreen .tool-icon-btn.icon-rotate-right::before {
+    width: 24px;
+    height: 24px;
+    border: 3px solid #c4ffff;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    filter: drop-shadow(0 0 4px rgba(0, 255, 255, 0.55));
+}
+
+#editorScreen .tool-icon-btn.icon-rotate-right::after {
+    width: 0;
+    height: 0;
+    border-left: 6px solid #c4ffff;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    transform: translate(-50%, -50%) translate(10px, -9px) rotate(45deg);
+}
+
+#editorScreen .tool-icon-btn.tool-selected {
+    border-color: #ff7de8;
+    box-shadow: 0 0 14px rgba(255, 125, 232, 0.7);
+    transform: translateY(-1px);
+}
+
+/* COPY icon — two overlapping squares */
+#editorScreen .tool-icon-btn.icon-copy::before {
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+    background: linear-gradient(135deg, #c4ffff, #7fd8ff);
+    box-shadow: inset 0 0 0 1.5px #00cfff;
+    transform: translate(calc(-50% + 4px), calc(-50% + 4px));
+}
+
+#editorScreen .tool-icon-btn.icon-copy::after {
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+    background: linear-gradient(135deg, #eafaff, #b0ecff);
+    box-shadow: inset 0 0 0 1.5px #00cfff;
+    transform: translate(calc(-50% - 4px), calc(-50% - 4px));
+}
+
+/* PASTE icon — clipboard shape */
+#editorScreen .tool-icon-btn.icon-paste::before {
+    width: 18px;
+    height: 20px;
+    border-radius: 2px 2px 3px 3px;
+    background: linear-gradient(180deg, #c4ffff, #7fd8ff);
+    box-shadow: inset 0 0 0 1.5px #00cfff;
+    top: 54%;
+}
+
+#editorScreen .tool-icon-btn.icon-paste::after {
+    width: 10px;
+    height: 5px;
+    border-radius: 2px 2px 0 0;
+    background: #4488aa;
+    box-shadow: inset 0 0 0 1.5px #00cfff;
+    top: 36%;
+}
+
+/* Locked state — BetterEdit off */
+#editorScreen .tool-icon-btn.betteredit-locked {
+    opacity: 0.32;
+    cursor: not-allowed;
+    border-color: #555;
+}
+
+#editorScreen .tool-icon-btn.betteredit-locked::before,
+#editorScreen .tool-icon-btn.betteredit-locked::after {
+    filter: grayscale(1);
+}
+
+/* Paste with nothing copied yet — slightly dimmed but not fully locked */
+#editorScreen .tool-icon-btn.betteredit-no-clipboard {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+#editorStatus {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: clamp(6px, 1.2vh, 10px) clamp(10px, 2vw, 20px);
+    border-radius: 8px;
+    font-family: monospace;
+    color: #00ffcc;
+}
+
+/* MODS SCREEN - matches Tutorial modal */
+#modsScreen .modal {
+    background: #1a0033;
+    padding: clamp(20px, 3.4vh, 34px);
+    border: 5px solid #ff00ff;
+    border-radius: 15px;
+    text-align: center;
+    width: min(92vw, 560px);
+    box-shadow: 0 0 50px #ff00ff;
+}
+
+#modsScreen .modal h2 {
+    font-size: clamp(1.3rem, 3.2vw, 2rem);
+    margin-bottom: 12px;
+    color: #00ffff;
+}
+
+#modsScreen .modal p {
+    font-size: 1.3rem;
+    margin: 15px 0;
+    line-height: 1.5;
+}
+
+#modsScreen .modal button {
+    margin-top: 16px;
+    padding: 12px 40px;
+    font-size: 1.4rem;
+    background: #330066;
+    border: 3px solid #00ffff;
+    color: #fff;
+    cursor: pointer;
+}
+
+#modsScreen .modal button:hover {
+    background: #ff00ff;
+    color: black;
+}
+
+/* MOD ROW */
+#modsScreen .mod-row,
+#cheatsScreen .mod-row,
+#cubesScreen .mod-row,
+#normalCubesScreen .mod-row,
+#robTopCubesScreen .mod-row,
+#gameCubesScreen .mod-row,
+#cubeStylesScreen .mod-row,
+#extrasScreen .mod-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 8px 0;
+    font-size: clamp(.9rem, 1.5vw, 1.1rem);
+    gap: 18px;
+    min-height: clamp(38px, 4.6vh, 46px);
+}
+
+#modsScreen .mod-row span,
+#cheatsScreen .mod-row span,
+#cubesScreen .mod-row span,
+#normalCubesScreen .mod-row span,
+#robTopCubesScreen .mod-row span,
+#gameCubesScreen .mod-row span,
+#cubeStylesScreen .mod-row span,
+#extrasScreen .mod-row span {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    font-size: clamp(1.35rem, 2.8vw, 1.9rem);
+    letter-spacing: .5px;
+}
+
+#modsScreen .mod-toggle,
+#cheatsScreen .mod-toggle,
+#cubesScreen .mod-toggle,
+#normalCubesScreen .mod-toggle,
+#robTopCubesScreen .mod-toggle,
+#gameCubesScreen .mod-toggle,
+#cubeStylesScreen .mod-toggle,
+#extrasScreen .mod-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+    width: clamp(84px, 10vw, 120px);
+    height: clamp(34px, 4vh, 40px);
+    padding: 6px 12px;
+    font-size: clamp(.8rem, 1.2vw, .95rem);
+    line-height: 1;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    border: 2px solid #00ffff;
+    background: #222;
+    color: #fff;
+    border-radius: 8px;
+    transition: all .15s;
+}
+
+#modsScreen .mod-toggle:hover,
+#cheatsScreen .mod-toggle:hover,
+#cubesScreen .mod-toggle:hover,
+#normalCubesScreen .mod-toggle:hover,
+#robTopCubesScreen .mod-toggle:hover,
+#gameCubesScreen .mod-toggle:hover,
+#cubeStylesScreen .mod-toggle:hover,
+#extrasScreen .mod-toggle:hover {
+    background: #2e2e2e;
+}
+
+#modsScreen .mod-toggle.on,
+#cheatsScreen .mod-toggle.on,
+#cubesScreen .mod-toggle.on,
+#normalCubesScreen .mod-toggle.on,
+#robTopCubesScreen .mod-toggle.on,
+#gameCubesScreen .mod-toggle.on,
+#cubeStylesScreen .mod-toggle.on,
+#extrasScreen .mod-toggle.on {
+    background: #cc0000;
+    border-color: #ff7777;
+    box-shadow: 0 0 14px rgba(255, 80, 80, 0.75);
+}
+
+#modsScreen .mod-toggle.nyan-toggle,
+#cheatsScreen .mod-toggle.nyan-toggle,
+#cubesScreen .mod-toggle.nyan-toggle,
+#normalCubesScreen .mod-toggle.nyan-toggle,
+#robTopCubesScreen .mod-toggle.nyan-toggle,
+#gameCubesScreen .mod-toggle.nyan-toggle,
+#cubeStylesScreen .mod-toggle.nyan-toggle,
+#extrasScreen .mod-toggle.nyan-toggle {
+    padding: 6px 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    overflow: hidden;
+    background: #130022;
+}
+
+#modsScreen .mod-toggle .nyan-icon,
+#cheatsScreen .mod-toggle .nyan-icon,
+#cubesScreen .mod-toggle .nyan-icon,
+#normalCubesScreen .mod-toggle .nyan-icon,
+#robTopCubesScreen .mod-toggle .nyan-icon,
+#gameCubesScreen .mod-toggle .nyan-icon,
+#cubeStylesScreen .mod-toggle .nyan-icon,
+#extrasScreen .mod-toggle .nyan-icon {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    object-fit: cover;
+    border-radius: 6px;
+    image-rendering: auto;
+}
+
+#modsScreen .mod-toggle .nyan-icon-canvas,
+#cheatsScreen .mod-toggle .nyan-icon-canvas,
+#cubesScreen .mod-toggle .nyan-icon-canvas,
+#normalCubesScreen .mod-toggle .nyan-icon-canvas,
+#robTopCubesScreen .mod-toggle .nyan-icon-canvas,
+#gameCubesScreen .mod-toggle .nyan-icon-canvas,
+#cubeStylesScreen .mod-toggle .nyan-icon-canvas,
+#extrasScreen .mod-toggle .nyan-icon-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+}
+
+#normalCubesScreen .cube-option-icon,
+#robTopCubesScreen .cube-option-icon,
+#gameCubesScreen .cube-option-icon {
+    width: clamp(126px, 15vw, 180px);
+    height: clamp(51px, 6vh, 60px);
+    object-fit: contain;
+    object-position: center;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+}
+
+#modsScreen .mod-action-btn,
+#cubesScreen .mod-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+    width: clamp(84px, 10vw, 120px);
+    height: clamp(34px, 4vh, 40px);
+    padding: 6px 12px;
+    font-size: clamp(.8rem, 1.2vw, .95rem);
+    line-height: 1;
+    text-align: center;
+    border: 2px solid #00ffff;
+    border-radius: 8px;
+    background: #222;
+    color: #fff;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+#modsScreen .mod-action-btn:hover,
+#cubesScreen .mod-action-btn:hover {
+    background: #2e2e2e;
+}
+
+/* Purple group-hover effect for any row that has a CHECK/action button */
+#modsScreen .mod-row:has(.mod-action-btn),
+#cubesScreen .mod-row:has(.mod-action-btn) {
+    border-radius: 10px;
+    transition: background .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+#modsScreen .mod-row:has(.mod-action-btn):hover,
+#cubesScreen .mod-row:has(.mod-action-btn):hover {
+    background: rgba(138, 43, 226, 0.22);
+    box-shadow: 0 0 16px rgba(255, 0, 255, 0.4);
+    transform: translateY(-1px);
+}
+
+#cheatsScreen .cube-styles-modal,
+#cubesScreen .cube-styles-modal,
+#normalCubesScreen .cube-styles-modal,
+#robTopCubesScreen .cube-styles-modal,
+#gameCubesScreen .cube-styles-modal,
+#cubeStylesScreen .cube-styles-modal,
+#extrasScreen .cube-styles-modal {
+    width: min(92vw, 560px);
+    min-height: min(70vh, 460px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#cheatsScreen .cube-style-center,
+#cubesScreen .cube-style-center,
+#normalCubesScreen .cube-style-center,
+#robTopCubesScreen .cube-style-center,
+#gameCubesScreen .cube-style-center,
+#cubeStylesScreen .cube-style-center,
+#extrasScreen .cube-style-center {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+    max-height: min(52vh, 420px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 12px;
+    box-sizing: border-box;
+    scrollbar-gutter: stable;
+}
+
+/* Keep label/icon/toggle columns aligned across all cube sub-groups */
+#normalCubesScreen .cube-style-center .mod-row,
+#robTopCubesScreen .cube-style-center .mod-row,
+#gameCubesScreen .cube-style-center .mod-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(126px, 15vw, 180px) clamp(84px, 10vw, 120px);
+    align-items: center;
+    column-gap: 12px;
+}
+
+#normalCubesScreen .cube-style-center .mod-row span,
+#robTopCubesScreen .cube-style-center .mod-row span,
+#gameCubesScreen .cube-style-center .mod-row span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#gameCubesScreen .cube-style-center .mod-row span {
+    font-size: clamp(1.05rem, 2.1vw, 1.45rem);
+}
+
+#gameCubesScreen .cube-style-center .mod-row .long-cube-label {
+    font-size: clamp(0.95rem, 1.8vw, 1.25rem);
+    letter-spacing: 0.2px;
+}
+
+#normalCubesScreen .cube-styles-modal,
+#robTopCubesScreen .cube-styles-modal,
+#gameCubesScreen .cube-styles-modal {
+    width: min(92vw, 560px);
+    height: min(70vh, 460px);
+    min-height: 0;
+}
+
+#cheatsScreen .cube-style-center .mod-row,
+#cubesScreen .cube-style-center .mod-row,
+#normalCubesScreen .cube-style-center .mod-row,
+#robTopCubesScreen .cube-style-center .mod-row,
+#gameCubesScreen .cube-style-center .mod-row,
+#cubeStylesScreen .cube-style-center .mod-row,
+#extrasScreen .cube-style-center .mod-row {
+    width: 100%;
+}
+
+#cheatsScreen .cube-style-back-btn,
+#cubesScreen .cube-style-back-btn,
+#normalCubesScreen .cube-style-back-btn,
+#robTopCubesScreen .cube-style-back-btn,
+#gameCubesScreen .cube-style-back-btn,
+#cubeStylesScreen .cube-style-back-btn,
+#extrasScreen .cube-style-back-btn {
+    margin-top: 12px;
+}
+
+#cheatsScreen .cube-style-center::-webkit-scrollbar,
+#cubesScreen .cube-style-center::-webkit-scrollbar,
+#normalCubesScreen .cube-style-center::-webkit-scrollbar,
+#robTopCubesScreen .cube-style-center::-webkit-scrollbar,
+#gameCubesScreen .cube-style-center::-webkit-scrollbar,
+#cubeStylesScreen .cube-style-center::-webkit-scrollbar,
+#extrasScreen .cube-style-center::-webkit-scrollbar {
+    width: 10px;
+}
+
+#cheatsScreen .cube-style-center::-webkit-scrollbar-thumb,
+#cubesScreen .cube-style-center::-webkit-scrollbar-thumb,
+#normalCubesScreen .cube-style-center::-webkit-scrollbar-thumb,
+#robTopCubesScreen .cube-style-center::-webkit-scrollbar-thumb,
+#gameCubesScreen .cube-style-center::-webkit-scrollbar-thumb,
+#cubeStylesScreen .cube-style-center::-webkit-scrollbar-thumb,
+#extrasScreen .cube-style-center::-webkit-scrollbar-thumb {
+    background: rgba(255, 0, 255, 0.55);
+    border-radius: 8px;
+}
+
+/* LEVEL SELECT */
+.level-select-container {
+    width: min(94vw, 760px);
+    padding: clamp(22px, 4vh, 40px);
+    background: linear-gradient(180deg, #14002b, #0c001f);
+    border: 5px solid #00ffff;
+    border-radius: 18px;
+    box-shadow: 0 0 40px rgba(0, 255, 255, 0.5);
+    text-align: center;
+}
+
+.level-title {
+    font-size: clamp(1.7rem, 4.2vw, 3rem);
+    color: #00ffff;
+    letter-spacing: 3px;
+    margin-bottom: clamp(18px, 3.2vh, 28px);
+    text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+}
+
+.level-card {
+    width: 100%;
+    padding: clamp(22px, 4.4vh, 36px) clamp(16px, 2vw, 24px);
+    border: 4px solid #ff00ff;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #2a0052, #50008a);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 22px rgba(255, 0, 255, 0.55);
+    transition: transform .15s, box-shadow .15s, filter .15s;
+}
+
+.level-card:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 0 30px rgba(255, 0, 255, 0.8);
+    filter: brightness(1.1);
+}
+
+.level-name {
+    display: block;
+    font-size: clamp(1.1rem, 2.6vw, 2rem);
+    letter-spacing: 2px;
+}
+
+.level-back-btn {
+    margin-top: clamp(14px, 2.2vh, 20px);
+    padding: clamp(9px, 1.8vh, 12px) clamp(20px, 4vw, 36px);
+    font-size: clamp(.95rem, 1.8vw, 1.25rem);
+    background: #230044;
+    border: 3px solid #00ffff;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.level-back-btn:hover {
+    background: #ff00ff;
+    color: #000;
+}
+
+/* SPEEDHACK */
+.speedhack-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+}
+
+.speedhack-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
+}
+
+.speedhack-input {
+    width: clamp(70px, 9vw, 100px);
+    padding: 5px 8px;
+    background: #1a0033;
+    border: 2px solid #00ffff;
+    border-radius: 6px;
+    color: #fff;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    font-size: clamp(.85rem, 1.4vw, 1rem);
+    text-align: center;
+    outline: none;
+}
+
+.speedhack-input:focus {
+    border-color: #ff00ff;
+    box-shadow: 0 0 8px rgba(255, 0, 255, 0.5);
+}
+
+.speedhack-control {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+}
+
+.speedhack-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 1;
+    height: 6px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #ff00ff, #00ffff);
+    outline: none;
+    cursor: pointer;
+}
+
+.speedhack-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #ff00ff;
+    box-shadow: 0 0 8px rgba(255, 0, 255, 0.7);
+    cursor: pointer;
+}
+
+.speedhack-slider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    border: 3px solid #ff00ff;
+    box-shadow: 0 0 8px rgba(255, 0, 255, 0.7);
+    cursor: pointer;
+}
+
+.speedhack-label {
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    color: #00ffff;
+    min-width: 42px;
+    text-align: right;
+}
