@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geometry Dash</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+
+<body>
+    <!-- MAIN MENU -->
+    <div id="menuScreen" class="screen">
+        <div class="menu-fx" aria-hidden="true">
+            <div id="menuIconsLayer" class="menu-icons-layer"></div>
+            <div class="menu-ground"></div>
+        </div>
+        <div class="menu-container">
+            <h1 class="title">GEOMETRY DASH</h1>
+            <div class="buttons">
+                <button onclick="showLevelSelect()">PLAY</button>
+                <button id="levelEditorMenuBtn" onclick="showEditor()">LEVEL EDITOR</button>
+                <button onclick="showIconSelector()">ICONS</button>
+                <button onclick="showMods()">MODS</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LEVEL SELECT -->
+    <div id="levelSelectScreen" class="screen hidden">
+        <div class="level-select-container">
+            <h2 class="level-title">SELECT LEVEL</h2>
+            <button class="level-card" onclick="startCustomLevel()">
+                <span class="level-name">CUSTOM LEVEL</span>
+            </button>
+            <button class="level-back-btn" onclick="hideLevelSelect()">BACK TO MENU</button>
+        </div>
+    </div>
+
+    <!-- MODS SCREEN -->
+    <div id="modsScreen" class="screen hidden">
+        <div class="modal">
+            <h2>MODS</h2>
+            <div class="mod-row">
+                <span>CHEATS</span>
+                <button class="mod-action-btn" onclick="showCheats()">CHECK</button>
+            </div>
+            <div class="mod-row">
+                <span>EXTRAS</span>
+                <button class="mod-action-btn" onclick="showExtras()">CHECK</button>
+            </div>
+            <button onclick="hideMods()">BACK TO MENU</button>
+        </div>
+    </div>
+
+    <!-- EXTRAS SCREEN -->
+    <div id="extrasScreen" class="screen hidden">
+        <div class="modal cube-styles-modal">
+            <h2>EXTRAS</h2>
+            <div class="cube-style-center">
+                <div class="mod-row">
+                    <span>FIRE IN THE HOLE</span>
+                    <button id="fireInTheHoleToggleBtn" class="mod-toggle" onclick="toggleFireInTheHole()">OFF</button>
+                </div>
+            </div>
+            <button class="cube-style-back-btn" onclick="hideExtras()">BACK TO MODS</button>
+        </div>
+    </div>
+
+    <!-- CHEATS PASSCODE SCREEN -->
+    <div id="cheatsPasscodeScreen" class="screen hidden">
+        <div class="modal cube-styles-modal passcode-modal">
+            <h2>CHEATS</h2>
+            <p class="passcode-label">ENTER PASSCODE</p>
+            <input id="passcodeInput" class="passcode-input" type="password" placeholder="••••••••"
+                oninput="checkPasscode(this.value)" autocomplete="off" spellcheck="false">
+            <p class="passcode-error hidden" id="passcodeError">INCORRECT PASSCODE</p>
+            <button class="cube-style-back-btn" onclick="hideCheatsPasscode()">BACK TO MODS</button>
+        </div>
+    </div>
+
+    <!-- CHEATS SCREEN -->
+    <div id="cheatsScreen" class="screen hidden">
+        <div class="modal cube-styles-modal">
+            <h2>CHEATS</h2>
+            <div class="cube-style-center">
+                <div class="mod-row">
+                    <span>NOCLIP</span>
+                    <button id="noclipToggleBtn" class="mod-toggle" onclick="toggleNoclip()">OFF</button>
+                </div>
+                <div class="mod-row">
+                    <span>SHOW HITBOXES</span>
+                    <button id="showHitboxesToggleBtn" class="mod-toggle" onclick="toggleShowHitboxes()">OFF</button>
+                </div>
+                <div class="mod-row">
+                    <span>INFINITE JUMPS</span>
+                    <button id="infiniteJumpsToggleBtn" class="mod-toggle" onclick="toggleInfiniteJumps()">OFF</button>
+                </div>
+                <div class="mod-row speedhack-row">
+                    <div class="speedhack-title-row">
+                        <span>SPEEDHACK</span>
+                        <input id="speedhackInput" type="number" min="0.1" max="10" step="0.125" value="1"
+                            oninput="setSpeedhackFromInput(this.value)" class="speedhack-input">
+                    </div>
+                    <div class="speedhack-control">
+                        <input id="speedhackSlider" type="range" min="0.1" max="3" step="0.125" value="1"
+                            oninput="setSpeedhack(this.value)" class="speedhack-slider">
+                        <span id="speedhackLabel" class="speedhack-label">1x</span>
+                    </div>
+                </div>
+            </div>
+            <button class="cube-style-back-btn" onclick="hideCheats()">BACK TO MODS</button>
+        </div>
+    </div>
+
+    <!-- ICON SELECTOR SCREEN -->
+    <div id="iconSelectorScreen" class="screen hidden">
+        <div class="icon-selector-modal">
+
+            <!-- Header: Title + Preview -->
+            <div class="icon-selector-header">
+                <h2 class="icons-screen-title">ICONS</h2>
+                <div class="icon-selector-preview-wrap">
+                    <div class="icon-selector-preview" id="iconSelectorPreview">
+                        <canvas id="iconPreviewCanvas" width="120" height="120"></canvas>
+                    </div>
+                    <span class="icon-selector-preview-name" id="iconSelectorPreviewName">DEFAULT</span>
+                </div>
+            </div>
+
+            <!-- Two Tabs -->
+            <div class="icon-tab-row">
+                <button class="icon-tab active" id="iconTab-icons" onclick="setIconTab('icons')">ICONS</button>
+                <button class="icon-tab" id="iconTab-styles" onclick="setIconTab('styles')">STYLES</button>
+            </div>
+
+            <!-- ICONS PANEL -->
+            <div class="icon-panel" id="iconPanel-icons">
+                <div class="icon-color-row">
+                    <div class="icon-color-picker">
+                        <label for="iconPrimaryColor">PRIMARY</label>
+                        <input id="iconPrimaryColor" type="color" value="#FFD200" aria-label="Primary cube color">
+                    </div>
+                    <div class="icon-color-picker">
+                        <label for="iconSecondaryColor">SECONDARY</label>
+                        <input id="iconSecondaryColor" type="color" value="#2FD2FF" aria-label="Secondary cube color">
+                    </div>
+                </div>
+                <div class="icon-grid" id="iconGrid"></div>
+            </div>
+
+            <!-- STYLES PANEL -->
+            <div class="icon-panel hidden" id="iconPanel-styles">
+                <div class="styles-grid">
+
+                    <button class="style-card" id="styleCard-trail" onclick="toggleTrail()">
+                        <div class="style-card-art style-art-trail" aria-hidden="true">
+                            <div class="trail-cube"></div>
+                            <div class="trail-dot t1"></div>
+                            <div class="trail-dot t2"></div>
+                            <div class="trail-dot t3"></div>
+                            <div class="trail-dot t4"></div>
+                            <div class="trail-dot t5"></div>
+                        </div>
+                        <div class="style-card-info">
+                            <span class="style-card-name">TRAIL</span>
+                            <span class="style-card-desc">Leave a glowing particle trail as you move</span>
+                            <span class="style-card-badge" id="trailToggleBtn">OFF</span>
+                        </div>
+                    </button>
+
+                    <button class="style-card" id="styleCard-rgb" onclick="toggleRgbCube()">
+                        <div class="style-card-art style-art-rgb" aria-hidden="true">
+                            <div class="rgb-cube-demo"></div>
+                        </div>
+                        <div class="style-card-info">
+                            <span class="style-card-name">RGB CUBE</span>
+                            <span class="style-card-desc">Your cube cycles through rainbow colours</span>
+                            <span class="style-card-badge" id="rgbCubeToggleBtn">OFF</span>
+                        </div>
+                    </button>
+
+                </div>
+            </div>
+
+            <button class="icon-selector-back-btn" onclick="hideIconSelector()">BACK TO MENU</button>
+        </div>
+    </div>
+
+    <!-- GAME SCREEN -->
+    <div id="gameScreen" class="screen hidden">
+        <canvas id="gameCanvas"></canvas>
+        <div id="gameUI">
+            <div id="score">0</div>
+            <button onclick="pauseGame()" class="pause-btn">PAUSE</button>
+        </div>
+    </div>
+
+    <!-- EDITOR SCREEN -->
+    <div id="editorScreen" class="screen hidden">
+        <canvas id="editorCanvas"></canvas>
+        <div class="editor-mode-switch">
+            <button id="objectsModeBtn" onclick="setEditorPanelMode('objects')">OBJECTS</button>
+            <button id="interactableModeBtn" onclick="setEditorPanelMode('interactable')">INTERACTABLE</button>
+            <button id="editModeBtn" onclick="setEditorPanelMode('edit')">EDIT</button>
+            <button id="viewModeBtn" onclick="setEditorPanelMode('view')">VIEW</button>
+        </div>
+        <div class="editor-tools">
+            <div id="objectsModeTools" class="editor-tool-group">
+                <button class="tool-icon-btn icon-block" data-tool="0" onclick="setTool(0)" title="BLOCK (ground)"
+                    aria-label="BLOCK (ground)"></button>
+                <button class="tool-icon-btn icon-spike" data-tool="1" onclick="setTool(1)" title="SPIKE (ground)"
+                    aria-label="SPIKE (ground)"></button>
+                <button class="tool-icon-btn icon-trash" data-tool="2" onclick="setTool(2)" title="ERASE"
+                    aria-label="ERASE"></button>
+            </div>
+            <div id="interactableModeTools" class="editor-tool-group hidden">
+                <button class="tool-icon-btn icon-yellow-orb" data-tool="3" onclick="setTool(3)" title="YELLOW ORB"
+                    aria-label="YELLOW ORB"></button>
+                <button class="tool-icon-btn icon-yellow-pad" data-tool="4" onclick="setTool(4)" title="YELLOW PAD"
+                    aria-label="YELLOW PAD"></button>
+                <button class="tool-icon-btn icon-blue-orb" data-tool="5" onclick="setTool(5)" title="BLUE ORB"
+                    aria-label="BLUE ORB"></button>
+                <button class="tool-icon-btn icon-blue-pad" data-tool="6" onclick="setTool(6)" title="BLUE PAD"
+                    aria-label="BLUE PAD"></button>
+                <button class="tool-icon-btn icon-pink-orb" data-tool="7" onclick="setTool(7)" title="PINK ORB"
+                    aria-label="PINK ORB"></button>
+                <button class="tool-icon-btn icon-pink-pad" data-tool="8" onclick="setTool(8)" title="PINK PAD"
+                    aria-label="PINK PAD"></button>
+                <button class="tool-icon-btn icon-trash" data-tool="2" onclick="setTool(2)" title="ERASE"
+                    aria-label="ERASE"></button>
+            </div>
+            <div id="editModeTools" class="editor-tool-group hidden">
+                <button class="tool-icon-btn icon-trash" onclick="deleteSelectedObject()" title="DELETE SELECTED"
+                    aria-label="DELETE SELECTED"></button>
+                <button id="copyBtn" class="tool-icon-btn icon-copy" onclick="copySelectedObject()" title="COPY"
+                    aria-label="COPY" style="display:none"></button>
+                <button id="pasteBtn" class="tool-icon-btn icon-paste" onclick="pasteObject()" title="PASTE"
+                    aria-label="PASTE" style="display:none"></button>
+                <button onclick="clearLevel()">CLEAR</button>
+                <button onclick="testPlay()">TEST PLAY</button>
+            </div>
+            <div id="viewModeTools" class="editor-tool-group hidden">
+                <button onclick="saveLevel()">SAVE</button>
+                <button onclick="loadLevel()">LOAD</button>
+                <button onclick="exitEditor()">BACK TO MENU</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUDIO -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="fireInTheHole" preload="auto">
+        <source src="Fire_In_The_Hole.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="../Mods/Mods.js"></script>
+    <script src="Game.js"></script>
+</body>
+
+</html>
